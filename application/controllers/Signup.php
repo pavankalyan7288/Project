@@ -1,4 +1,3 @@
-<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Signup extends CI_Controller {
@@ -19,36 +18,25 @@ class Signup extends CI_Controller {
         $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
         $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'required|matches[password]');
         
-
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('signup');
-            $data['baseurl'] = base_url(); // Assuming you have the base_url() function available
-            $this->load->view('signup', $data);
-
         } else {
-            if($this->input->post('save')) {
-                $username = $this->input->post('username');
-                $email = $this->input->post('email');
-                $password = $this->input->post('password');
-               
+            $username = $this->input->post('username');
+            $email = $this->input->post('email');
+            $password = $this->input->post('password');
+           
+            $data = array(
+                'username' => $username,
+                'email' => $email,
+                'password' => $password
+            );
 
-                $data = array(
-                    'username' => $username,
-                    'email' => $email,
-                    'password' => $password
-                );
-
-                $signupData = $this->signup_model->register($data);
-                if ($signupData !== '') {
-                    echo "Successfully created";
-                } else {
-                    echo "Error";
-                }
-                
-
+            $signupData = $this->signup_model->register($data);
+            if ($signupData) {
+                echo "Successfully created";
+            } else {
+                echo "Error";
             }
-
-
         }
     }
 }
