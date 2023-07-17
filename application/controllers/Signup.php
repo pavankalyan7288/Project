@@ -22,7 +22,7 @@ class Signup extends CI_Controller {
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('signup');
-            $data['baseurl'] = base_url();
+            $data['baseurl'] = base_url(); // Assuming you have the base_url() function available
             $this->load->view('signup', $data);
 
         } else {
